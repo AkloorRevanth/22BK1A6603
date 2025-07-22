@@ -1,10 +1,11 @@
+// server.js
 const express = require("express");
 const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-let urls = []; // In-memory store for demo
+let urls = []; // In-memory store
 
 app.post("/shorten", (req, res) => {
   const { fullUrl, validity, preferredCode } = req.body;
@@ -28,7 +29,7 @@ app.get("/:short", (req, res) => {
   const { short } = req.params;
   const urlObj = urls.find(u => u.short === short);
   if (!urlObj) return res.status(404).send("Not found");
-  // Simulate click tracking
+
   const click = {
     timestamp: new Date().toISOString(),
     source: req.get("Referer") || "Direct",
@@ -44,4 +45,4 @@ app.get("/urls", (req, res) => {
   res.json(urls);
 });
 
-app.listen(3000, () => console.log("Server running on 3000"));
+app.listen(5000, () => console.log("✅ Backend running on http://localhost:5000"));
